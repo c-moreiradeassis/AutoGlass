@@ -5,3 +5,13 @@
 /.vs
 /API/obj/
 /API/bin/
+/Application/obj/
+/Application/bin/
+/Data/obj/
+/Data/bin/
+/Domain/obj/
+/Domain/bin/
+/Infra/obj/
+/Infra/bin/
+/Test/obj/
+/Test/bin/
