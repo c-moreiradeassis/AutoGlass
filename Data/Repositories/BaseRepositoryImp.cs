@@ -21,5 +21,10 @@ namespace Data.Repositories
         {
             await _dataContext.SaveChangesAsync();
         }
+
+        public void UpdateEntity<T>(T entity) where T : class
+        {
+            _dataContext.Update(entity);
+        }
     }
 }

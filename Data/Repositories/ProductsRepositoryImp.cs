@@ -17,11 +17,21 @@ namespace Data.Repositories
         public async Task<List<Products>> GetAll(int pageNumber, int pageSize)
         {
             var products = await _dataContext.Products
+                .Where(d => d.Situation == true)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
             return products;
+        }
+
+        public async Task<Products> GetByCode(int code)
+        {
+            var product = await _dataContext.Products.Where(d => d.Code == code)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            
+            return product;
         }
     }
 }
