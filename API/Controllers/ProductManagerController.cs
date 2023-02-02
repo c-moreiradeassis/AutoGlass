@@ -1,7 +1,7 @@
+using API.Pagination;
 using Application.Dtos;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Controllers
 {
@@ -17,16 +17,28 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductsDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProductsDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get([FromQuery] PaginationFilter filter)
         {
-            return Ok();
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+
+            var result = await _productManagerService.GetAll(validFilter.PageNumber, validFilter.PageSize);
+
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductsDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProductsDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post(ProductsDto productDto)
+        public async Task<IActionResult> Post([FromBody] ProductsDto productDto)
         {
             await _productManagerService.AddProduct(productDto);
 

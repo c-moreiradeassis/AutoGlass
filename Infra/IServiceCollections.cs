@@ -50,6 +50,7 @@ namespace Infra
             });
 
             services.AddScoped<BaseRepository, BaseRepositoryImp>();
+            services.AddScoped<ProductsRepository, ProductsRepositoryImp>();
 
             return services;
         }
