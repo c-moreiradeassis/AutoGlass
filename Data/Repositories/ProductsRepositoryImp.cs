@@ -30,7 +30,7 @@ namespace Data.Repositories
             var product = await _dataContext.Products.Where(d => d.Code == code)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
-            
+
             return product;
         }
     }
